@@ -6,17 +6,45 @@ const searchButton = document.getElementById("searchButton");
 const errorMessage = document.getElementById("errorMessage");
 
 // Fetch and display the first 50 Pokémon
+// Fetch and display the first 50 Pokémon with lazy loading
 const fetchPokemons = async () => {
-  try {
-    const response = await fetch(`${apiUrl}?limit=50`);
-    if (!response.ok) throw new Error("Failed to load Pokémon data.");
-    const data = await response.json();
+  const loader = document.getElementById("loader");
+  const pokemonList = document.getElementById("pokemonList");
 
-    displayPokemons(data.results);
-  } catch (error) {
-    displayError(error.message);
-  }
+  // Show loader and hide Pokémon list
+  loader.style.display = "block";
+  pokemonList.style.display = "none";
+
+  // Simulate a 4-second loading delay
+  setTimeout(async () => {
+    try {
+      const response = await fetch(`${apiUrl}?limit=50`);
+      if (!response.ok) throw new Error("Failed to load Pokémon data.");
+      const data = await response.json();
+
+      // Hide loader and show Pokémon list
+      loader.style.display = "none";
+      pokemonList.style.display = "grid";
+
+      displayPokemons(data.results);
+    } catch (error) {
+      loader.style.display = "none"; // Hide loader on error
+      displayError(error.message);
+    }
+  }, 2000); // 4 seconds delay
 };
+
+// const fetchPokemons = async () => {
+//   try {
+//     const response = await fetch(`${apiUrl}?limit=50`);
+//     if (!response.ok) throw new Error("Failed to load Pokémon data.");
+//     const data = await response.json();
+
+//     displayPokemons(data.results);
+//   } catch (error) {
+//     displayError(error.message);
+//   }
+// };
 
 // Display Pokémon cards
 const displayPokemons = async (pokemons) => {
@@ -37,6 +65,7 @@ const fetchPokemonDetails = async (url) => {
   const response = await fetch(url);
   if (!response.ok) throw new Error("Error loading Pokémon details.");
   return response.json();
+  
 };
 
 // Create a Pokémon card
