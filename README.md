@@ -1,4 +1,7 @@
+
+
 Pokémon Search Web Application
+live link:https://mellifluous-otter-198a93.netlify.app/
 Overview
 The Pokémon Search Web Application is a responsive and interactive project designed to allow users to search for Pokémon by name or ID and explore details such as their height, weight, and image. The application fetches Pokémon data dynamically using the PokéAPI. It also features a visually appealing layout, animations, and lazy loading for an enhanced user experience.
 
